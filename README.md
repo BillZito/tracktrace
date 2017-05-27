@@ -1,8 +1,16 @@
 # Track and Trace
 
-Startime: 7:32 pm
-Endtime: 
+## Getting Started ##
+```
+git clone https://github.com/billzito/tracktrace
+npm install
+npm start
 
-##1. Request for getting t/t info:
+(in another tab):
+npm run dev
+```
+
+Notes: 
+## Request for getting info from pilship##
 https://www.pilship.com/shared/ajax/?fn=get_tracktrace_bl&ref_num=REFID
 Where REFID is TXG790195200, etc.

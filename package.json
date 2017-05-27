@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "webpack -p --config webpack.prod.config.js",
+    "dev": "webpack -d --watch --history-api-fallback",
     "start": "nodemon index.js"
+  },
+  "engines": {
+    "node": "4.5.0"
   },
   "repository": {
     "type": "git",
@@ -14,14 +19,24 @@
   "author": "Bill Zito",
   "license": "ISC",
   "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "cheerio": "^0.22.0",
     "express": "^4.15.3",
+    "jsdom": "^11.0.0",
     "mongoose": "^4.10.2",
     "nodemon": "^1.11.0",
+    "react": "^15.5.4",
+    "react-bootstrap": "^0.31.0",
+    "react-dom": "^15.5.4",
+    "react-router": "^2.0.1",
     "request": "^2.81.0",
-    "request-promise": "^4.2.1"
+    "request-promise": "^4.2.1",
+    "webpack": "^1.13.3"
   },
   "bugs": {
     "url": "https://github.com/BillZito/tracktrace/issues"

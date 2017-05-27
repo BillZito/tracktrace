@@ -1,0 +1,25 @@
+body {
+  background-color: #99bbff;
+}
+
+button{
+  margin: 0 0 0 10;
+}
+
+.main{
+  margin: 50 0 10 0;
+}
+
+.blInfo{
+  background-color: #e8f0ff;
+  padding: 20px;
+  border-radius: 25px;
+}
+
+.containerTitle{
+  text-decoration: underline;
+}
+
+.containerBox{
+  margin: 0 0 0 20;
+}
