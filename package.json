@@ -1,0 +1,30 @@
+{
+  "name": "term49",
+  "version": "1.0.0",
+  "description": "Track and trace shipments",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BillZito/tracktrace.git"
+  },
+  "author": "Bill Zito",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "cheerio": "^0.22.0",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.2",
+    "nodemon": "^1.11.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1"
+  },
+  "bugs": {
+    "url": "https://github.com/BillZito/tracktrace/issues"
+  },
+  "homepage": "https://github.com/BillZito/tracktrace#readme"
+}
