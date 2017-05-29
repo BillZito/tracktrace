@@ -83,7 +83,7 @@ app.get('/', function(request, response) {
 
 
 /*********************************************************************************
-listen
+listen on port
 *********************************************************************************/
 app.listen(app.get('port'), ()=>{
   console.log('listening on port', app.get('port'));
@@ -91,8 +91,8 @@ app.listen(app.get('port'), ()=>{
 
 /*********************************************************************************
 parse results
-*********************************************************************************/
-// const dummyData = {
+form of data:
+//{
 //   'BLNumber': 'TXG790195200',
 //   'SteamshipLine': 'PIL',
 //   'Origin': 'Xingang',
@@ -102,8 +102,10 @@ parse results
 //   'VesselETA': Date.now(),
 //   'ListOfContainers': [{'Number': 'SEGU1712879', 'Size': 20, 'Type': 'GP'}],
 // };
+*********************************************************************************/
 
 // get port information
+// if want acronyms, uncomment slices belows
 const parsePort = (info) => {
   let $ = cheerio.load(info);
   const b = $('b');
@@ -111,13 +113,13 @@ const parsePort = (info) => {
   // port
   const port = b.first().text().split('[');
   const portName = port[0];
-  const portAcronym = port[1].slice(0, -1);
+  // const portAcronym = port[1].slice(0, -1);
 
   // destination 
   const dest = b.next().next().text().split('[');
   const destName = dest[0];
-  const destAndContainer = dest[1].split(']');
-  const destAcronym = destAndContainer[0];
+  // const destAndContainer = dest[1].split(']');
+  // const destAcronym = destAndContainer[0];
 
   // OriginAcronym: portAcronym,
   // DestinationAcronym: destAcronym,
@@ -137,7 +139,7 @@ const parseVoyage = (table, details) => {
   details['Vessel'] = vesselVoyage.slice(0, voyageInfo.index);
 
   // TODO: finish parsing and use a for loop to get more than 1 container
-  let allContainers = []
+  let allContainers = [];
   const numb = $('.container-num').last().text().split(' ')[0];
   const containerDetails = $('.container-num').next().text();
   const sizeLocation = containerDetails.match(/[0-9]+/);
@@ -193,4 +195,5 @@ const getBill = (trackID, cb)=>{
   });
 };
 
-getBill('TXG790195200', ()=>console.log('hello world'));
+// to test get request locally
+// getBill('TXG790195200', ()=>console.log('hello world'));

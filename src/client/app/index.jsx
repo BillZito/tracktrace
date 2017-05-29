@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import { Button } from 'react-bootstrap';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { Router, Route, hashHistory, browserHistory, IndexRoute } from 'react-router';
 
 const website = 'https://nameless-journey-97987.herokuapp.com';
 
@@ -11,21 +11,41 @@ class App extends React.Component {
     this.noRefreshGetTrack = this.noRefreshGetTrack.bind(this);
     this.getTrackInfo = this.getTrackInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    console.log('this', this.props.params.input);
+
+    //get id from url, and slice out pabv if given
+    let id = this.props.params.id;
+    if (id && id.indexOf('PABV') != -1){
+      id = id.slice(4);
+    }
+
     this.state = {
-      id: this.props.params.input,
+      routerId: id,
+      id: '',
       data: null,
       notfound: false
     };
-    if (this.state.id && !this.state.data) {
-      this.getTrackInfo();
-    }
   }
+
 
   noRefreshGetTrack(event) {
     event.preventDefault();
     this.getTrackInfo();
   }
+
+  //if there is a router id, 
+  componentDidMount(){
+    if (this.state.routerId && !this.state.data) {
+      this.getTrackInfoFromRoute();
+    }
+  }
+
+  // set id to be url id and get info from server
+  getTrackInfoFromRoute(){
+    this.setState({id: this.state.routerId}, ()=>{
+      this.getTrackInfo();
+    });
+  }
+
   // get booking information from server
   getTrackInfo(){
     fetch(`${website}/bookings/${this.state.id}`, {
@@ -47,6 +67,7 @@ class App extends React.Component {
       }
     })
     .then((data)=>{
+      // save data in state, set notfound to false to allow rendering
       if (data) { 
         console.log('data', data);
         this.setState({
@@ -61,6 +82,7 @@ class App extends React.Component {
   }
 
   handleChange(event){
+    console.log('changing', event.target.value);
     const value = event.target.value;
     this.setState({[event.target.name]: value});
   }
@@ -87,8 +109,10 @@ class App extends React.Component {
     if (this.state.notfound) {
       return (<div> B/L not found, try again! </div>);
     } else if (this.state.data != null) {
+      const link = website + '/#/bookings/' + this.state.id;
       return (
         <div className="blInfo">     
+          <div> <b> Shareable link: </b> <a href={link}> {link} </a> </div>
           <div> <b> B/L Number: </b> {this.state.data.BLNumber}</div>
           <div> <b> Steamship Line: </b> {this.state.data.SteamshipLine}</div>
           <div> <b> Origin: </b> {this.state.data.Origin}</div>
@@ -127,15 +151,16 @@ class App extends React.Component {
   }
 }
 
+// if url doesnt exist, give 404
 const NotFound = () => (
   <h1>404.. This page is not found!</h1>);
 
 class Routes extends React.Component{
     render(){
       return(
-        <Router history={browserHistory}>
+        <Router history={hashHistory}>
           <Route path='/' component={App} />
-          <Route path='/bookings/:input' component={App} />
+          <Route path='/bookings/:id' component={App} />
           <Route path='/*' component={NotFound} />
         </Router>
         );
